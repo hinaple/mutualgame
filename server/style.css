@@ -1,0 +1,153 @@
+body, html {
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+button {
+    font-family: 'Jua', sans-serif;
+    width: 80%;
+    font-size: 50px;
+    border: none;
+    border-radius: 100px;
+    background-color: #f2e5a2;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    padding: 4px;
+    margin: 15px;
+}
+div {
+    font-family: 'Jua', sans-serif;
+}
+p {
+    font-family: 'Jua', sans-serif;
+    font-size: 25px;
+    margin: 0px;
+    pointer-events: none;
+}
+.swal-title, .swal-text {
+    font-family: 'Jua', sans-serif;
+}
+.screen {
+    margin: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: #81ac8b;
+}
+.logo {
+    width: 300px;
+    object-fit: contain;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+}
+.logo.main, .logo.host {
+    top: 8%;
+}
+.logo.ingame {
+    top: 6%;
+}
+.tools {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.tools.main {
+    bottom: 40%;
+}
+.tools.host {
+    bottom: 37%;
+}
+.tools.ingame {
+    bottom: 20%;
+}
+input.code {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Jua', sans-serif;
+    text-align: center;
+    width: 60%;
+    font-size: 30px;
+    border: none;
+    border-radius: 100px;
+    background-color: #fffbe4;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    padding: 15px;
+}
+.loading {
+    position: relative;
+    left: 50%;
+    top: 140px;
+    width: 100px;
+    height: 100px;
+    background-color: #fffbe4;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    animation: spin 1s infinite linear;
+}
+.load-cir {
+    position: relative;
+    right: 0px;
+    top: 50px;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background-color: #1e2827;
+    border-radius: 50%;
+}
+.question {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 30px;
+    padding: 23px;
+    margin: 0px;
+    background-color: #fffbe4;
+    width: 70%;
+    border-radius: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+.buttons {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.buttons > button {
+    display: flex-inline;
+    font-size: 40px;
+    width: 40%;
+    height: 170px;
+    border-radius: 50px;
+    margin: 10px 2px 10px 2px;
+    justify-content: center;
+}
+.loadbar-parent {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 40px;
+    background-color: #fffbe4;
+    border-radius: 20px;
+    box-shadow: 0 0 10px #d9666680;
+    margin-top: 50px;
+    padding: 0px;
+}
+.loadbar-child {
+    animation: loadbar 3s linear;
+    background-color: #d96666;
+    height: 40px;
+    border-radius: 20px;
+}
+
+@keyframes spin {
+    0% { transform: translateX(-50%) rotate(0deg); }
+    100% { transform: translateX(-50%) rotate(360deg); }
+}
+@keyframes loadbar {
+    0% { width: 40px; }
+    100% { width: 100% }
+}
