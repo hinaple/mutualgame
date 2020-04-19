@@ -13,7 +13,16 @@ if(!(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navig
     });
 }
 
-const code = "tmos.io/4Jd6sV";
+const socket = io();
+
+socket.emit("host");
+
+let code = null;
+socket.on("code", data => {
+    code = data;
+    console.log(code);
+});
+
 function copy() {
     var copyText = document.getElementById("code");
     copyText.select();

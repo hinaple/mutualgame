@@ -8,14 +8,9 @@
         <link rel="stylesheet" type="text/css" href="../style.css">
     </head>
     <body oncontextmenu='return false' ondragstart='return false' onselectstart='return false'>
-        <div class="screen" id="screen">
-            <img src="../images/logoFull.png" class="logo main">
-            <div class="tools main">
-                <button onclick="location.href='/host'">START</button><br>
-                <button onclick="location.href='/join'">JOIN</button>
-            </div>
-        </div>
+        <div class="screen" id="screen"></div>
     </body>
+    <script src="/socket.io/socket.io.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="app.js"></script>
 </html>

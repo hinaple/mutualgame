@@ -14,6 +14,7 @@ button {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     padding: 4px;
     margin: 15px;
+    transition: all 0.3s;
 }
 div {
     font-family: 'Jua', sans-serif;
@@ -25,7 +26,11 @@ p {
     pointer-events: none;
 }
 .swal-title, .swal-text {
-    font-family: 'Jua', sans-serif;
+    font-family: 'Jua',
+    sans-serif;
+}
+.swal-button {
+    width: 80px;
 }
 .screen {
     margin: 0px;
@@ -58,18 +63,19 @@ p {
     bottom: 40%;
 }
 .tools.host {
-    bottom: 37%;
+    bottom: 27%;
+}
+.tools.join {
+    bottom: 35%;
 }
 .tools.ingame {
     bottom: 20%;
 }
 input.code {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    position: relative;
     font-family: 'Jua', sans-serif;
     text-align: center;
-    width: 60%;
+    width: 70%;
     font-size: 30px;
     border: none;
     border-radius: 100px;
@@ -80,7 +86,7 @@ input.code {
 .loading {
     position: relative;
     left: 50%;
-    top: 140px;
+    top: 70px;
     width: 100px;
     height: 100px;
     background-color: #fffbe4;
