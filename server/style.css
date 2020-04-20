@@ -18,6 +18,7 @@ button {
 }
 div {
     font-family: 'Jua', sans-serif;
+    word-break: keep-all;
 }
 p {
     font-family: 'Jua', sans-serif;
@@ -71,6 +72,9 @@ p {
 .tools.ingame {
     bottom: 20%;
 }
+.tools.fin {
+    bottom: 17%;
+}
 input.code {
     position: relative;
     font-family: 'Jua', sans-serif;
@@ -116,19 +120,32 @@ input.code {
     border-radius: 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
-.buttons {
+.buttons, .names {
     position: relative;
     left: 50%;
     transform: translateX(-50%);
 }
 .buttons > button {
-    display: flex-inline;
+    display: inline-flex;
     font-size: 40px;
     width: 40%;
     height: 170px;
     border-radius: 50px;
     margin: 10px 2px 10px 2px;
     justify-content: center;
+    word-break: keep-all;
+}
+.name {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    width: 40%;
+    height: 70px;
+    border-radius: 35px;
+    margin: 10px 2px 10px 2px;
+    background-color: #f2e5a2;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 .loadbar-parent {
     position: relative;
@@ -147,6 +164,33 @@ input.code {
     background-color: #d96666;
     height: 40px;
     border-radius: 20px;
+}
+.loadbar-child-green {
+    position: relative;
+    top: -40px;
+    background-color: #00c060;
+    height: 40px;
+    border-radius: 20px;
+    opacity: 0;
+}
+.score {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 30px;
+    padding: 23px;
+    margin: 0px;
+    background-color: #f2e5a2;
+    width: 70%;
+    border-radius: 60px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+.score > p {
+    font-size: 90px;
+}
+.capture {
+    margin-top: 40px;
+    font-size: 35px;
 }
 
 @keyframes spin {

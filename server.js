@@ -34,7 +34,7 @@ const qstns = [{
     "question": "test9",
     "ways": ["9: 0", "9: 1"]
 }];
-
+const QUESTIONCNT = 10;
 let rooms = [];
 
 function randomStr(len) {
@@ -60,10 +60,7 @@ function genCode() {
 }
 
 function shuffle(array, len) {
-    let random = array.map(Math.random);
-    array.sort(function(a, b) {
-      return random[a] - random[b];
-    });
+    array.sort(() => Math.random() - 0.5);
     return array.slice(0, len);
 }
 
@@ -79,10 +76,11 @@ io.on("connection", socket => {
         room[0] = rooms.length;
         room[1] = true;
         rooms.push({
-            host: [socket.id, null],
-            memb: [null, null],
+            host: socket.id,
+            memb: null,
             code: code,
             questions: [],
+            result: [],
             sync: [null, null],
             index: -1,
             disconnected: false
@@ -93,12 +91,12 @@ io.on("connection", socket => {
         data = data.trim();
         for(let i = 0; i < rooms.length; i++) {
             if(rooms[i].code == data) {
-                rooms[i].memb[0] = socket.id;
+                rooms[i].memb = socket.id;
                 room[0] = i;
                 room[1] = false;
-                room.questions = shuffle(qstns, 10);
+                room.questions = shuffle(qstns, QUESTIONCNT);
                 socket.emit("joinCheck", { bool: true, que: room.questions });
-                io.to(rooms[room[0]].host[0]).emit("start", room.questions);
+                io.to(rooms[room[0]].host).emit("start", room.questions);
                 return;
             }
         }
@@ -113,8 +111,8 @@ io.on("connection", socket => {
             if(rooms[room[0]].sync[0] && rooms[room[0]].sync[1]) {
                 rooms[room[0]].index = i;
                 rooms[room[0]].sync = [null, null];
-                io.to(rooms[room[0]].host[0]).emit("play", { match: null, index: rooms[room[0]].index });
-                io.to(rooms[room[0]].memb[0]).emit("play", { match: null, index: rooms[room[0]].index });
+                io.to(rooms[room[0]].host).emit("play", { match: null, index: rooms[room[0]].index });
+                io.to(rooms[room[0]].memb).emit("play", { match: null, index: rooms[room[0]].index });
             }
         }
     });
@@ -122,24 +120,38 @@ io.on("connection", socket => {
     socket.on("select", num => {
         if(rooms[room[0]].sync[0] !== null) {
             rooms[room[0]].index++;
+            let result = null;
+            if(rooms[room[0]].index >= QUESTIONCNT) {
+                result = rooms[room[0]].result;
+                rooms[room[0]].index = 'e';
+            }
             if(num === false) {
-                io.to(rooms[room[0]].host[0]).emit("play", { match: 0, index: rooms[room[0]].index });
-                io.to(rooms[room[0]].memb[0]).emit("play", { match: 0, index: rooms[room[0]].index });
+                rooms[room[0]].result.push(false);
+                io.to(rooms[room[0]].host).emit("play", { match: 0, index: rooms[room[0]].index, result: result });
+                io.to(rooms[room[0]].memb).emit("play", { match: 0, index: rooms[room[0]].index, result: result });
             }
             else if(rooms[room[0]].sync[0] == num) {
-                io.to(rooms[room[0]].host[0]).emit("play", { match: true, index: rooms[room[0]].index });
-                io.to(rooms[room[0]].memb[0]).emit("play", { match: true, index: rooms[room[0]].index });
+                rooms[room[0]].result.push(true);
+                io.to(rooms[room[0]].host).emit("play", { match: true, index: rooms[room[0]].index, result: result });
+                io.to(rooms[room[0]].memb).emit("play", { match: true, index: rooms[room[0]].index, result: result });
             }
             else {
-                io.to(rooms[room[0]].host[0]).emit("play", { match: false, index: rooms[room[0]].index });
-                io.to(rooms[room[0]].memb[0]).emit("play", { match: false, index: rooms[room[0]].index });
+                rooms[room[0]].result.push(false);
+                io.to(rooms[room[0]].host).emit("play", { match: false, index: rooms[room[0]].index, result: result });
+                io.to(rooms[room[0]].memb).emit("play", { match: false, index: rooms[room[0]].index, result: result });
             }
             rooms[room[0]].sync = [null, null];
         }
-        else {
-            rooms[room[0]].sync[0] = num;
-        }
+        else rooms[room[0]].sync[0] = num;
     });
+
+    socket.on("name", data => {
+        if(room[1]) io.to(rooms[room[0]].memb).emit("name", data);
+        else io.to(rooms[room[0]].host).emit("name", data);
+        if(rooms[room[0]].sync[0] === true) rooms.splice(room[0], 1);
+        else rooms[room[0]].sync[0] = true;
+        room = [null, null];
+    })
 
     socket.on("disconnect", () => {
         if(room[0] != null) {
@@ -147,8 +159,8 @@ io.on("connection", socket => {
                 rooms.splice(room[0], 1);
             else if(!rooms[room[0]].disconnected) {
                 rooms[room[0]].disconnected = true;
-                if(room[1]) io.to(rooms[room[0]].memb[0]).emit("dscnct");
-                else io.to(rooms[room[0]].host[0]).emit("dscnct");
+                if(room[1]) io.to(rooms[room[0]].memb).emit("dscnct");
+                else io.to(rooms[room[0]].host).emit("dscnct");
             }
             else 
                 rooms.splice(room[0], 1);
