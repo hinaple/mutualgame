@@ -3,7 +3,9 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>이구동성 온라인</title>
+        <title>이심전심 온라인</title>
+        <link rel="icon" href="images/favicon.ico?v=2" type="image/x-icon">
+        <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
         <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="../style.css">
         <script src="/socket.io/socket.io.js"></script>
@@ -11,7 +13,11 @@
         <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
     </head>
     <body oncontextmenu='return false' ondragstart='return false' onselectstart='return false'>
-        <div class="screen" id="screen"></div>
+        <div class="screen" id="screen" style="text-align: center;">
+            <div class="tools">
+                <button onclick="start()">게임 시작!</button>
+            </div>
+        </div>
     </body>
     <script src="app.js"></script>
 </html>

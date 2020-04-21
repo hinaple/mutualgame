@@ -40,17 +40,11 @@ p {
     background-color: #81ac8b;
 }
 .logo {
-    width: 300px;
+    width: 350px;
     object-fit: contain;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    pointer-events: none;
-}
-.logo.main, .logo.host {
-    top: 8%;
-}
-.logo.ingame {
     top: 6%;
 }
 .tools {
@@ -58,22 +52,8 @@ p {
     text-align: center;
     width: 100%;
     left: 50%;
-    transform: translateX(-50%);
-}
-.tools.main {
-    bottom: 40%;
-}
-.tools.host {
-    bottom: 27%;
-}
-.tools.join {
-    bottom: 35%;
-}
-.tools.ingame {
-    bottom: 20%;
-}
-.tools.fin {
-    bottom: 17%;
+    top: 55%;
+    transform: translate(-50%, -50%);
 }
 input.code {
     position: relative;
@@ -191,6 +171,25 @@ input.code {
 .capture {
     margin-top: 40px;
     font-size: 35px;
+}
+
+@media (max-height: 650px) {
+    button { font-size: 40px; }
+    p { font-size: 15px; }
+    input.code { font-size: 20px; }
+    .question { font-size: 20px; }
+    .name { font-size: 20px; }
+    .score { font-size: 20px; }
+    .score > p { font-size: 80px; }
+    .capture { font-size: 25px; }
+    .logo {
+        top: 2%;
+        width: 290px;
+    }
+    .buttons > button {
+        font-size: 30px;
+        height: 130px;
+    }
 }
 
 @keyframes spin {

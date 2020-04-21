@@ -1,39 +1,10 @@
 const express = require("express");
 const app = express();
 const server = require("http").createServer(app);
+const fs = require("fs");
 const io = require("socket.io")(server);
 
-const qstns = [{
-    "question": "test0",
-    "ways": ["0: 0", "0: 1"]
-}, {
-    "question": "test1",
-    "ways": ["1: 0", "1: 1"]
-}, {
-    "question": "test2",
-    "ways": ["2: 0", "2: 1"]
-}, {
-    "question": "test3",
-    "ways": ["3: 0", "3: 1"]
-}, {
-    "question": "test4",
-    "ways": ["4: 0", "4: 1"]
-}, {
-    "question": "test5",
-    "ways": ["5: 0", "5: 1"]
-}, {
-    "question": "test6",
-    "ways": ["6: 0", "6: 1"]
-}, {
-    "question": "test7",
-    "ways": ["7: 0", "7: 1"]
-}, {
-    "question": "test8",
-    "ways": ["8: 0", "8: 1"]
-}, {
-    "question": "test9",
-    "ways": ["9: 0", "9: 1"]
-}];
+const qstns = JSON.parse(fs.readFileSync("data.json").toString());
 const QUESTIONCNT = 10;
 let rooms = [];
 
@@ -69,7 +40,6 @@ app.use('/', express.static("server"));
 io.on("connection", socket => {
     let room = [null, null]; //room, host
 
-    console.log("user connected: " + socket.id);
     socket.on("host", () => {
         let code = genCode();
         socket.emit("code", code);

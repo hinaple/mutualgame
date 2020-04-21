@@ -1,4 +1,13 @@
 const screen = document.getElementById("screen");
+let sounds = [];
+sounds.push(new Audio());
+sounds[0].src = "../sounds/main.mp3";
+sounds[0].volume = 0.8;
+sounds[0].loop = true;
+sounds.push(new Audio());
+sounds[1].src = "../sounds/bgm.mp3";
+sounds[1].volume = 0.8;
+sounds[1].loop = true;
 let questions = null;
 let isHost = null;
 let qindex = -1;
@@ -12,15 +21,15 @@ let names = [null, null];
 if(!(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))) {
     swal({
         title: "PC 접속 감지됨",
-        text: "이 게임은 모바일에 최적화되어있습니다.\n"
-        +"PC 접속을 권장하지 않으니 모바일 기기로 다시 접속해주세요!",
+        text: "이 게임은 모바일에 최적화되어있습니다😥\n"
+        +"PC 접속을 권장하지 않으니 모바일 기기로 다시 접속해주세요!🙏",
         icon: "warning",
         button: "확인"
     }).then(() => {
         let screen = document.getElementById("screen");
         screen.parentElement.removeChild(screen);
         let aTag = document.createElement('p');
-        aTag.appendChild(document.createTextNode("PC접속을 권장하지 않습니다.\n"
+        aTag.appendChild(document.createTextNode("PC접속을 권장하지 않습니다😥\n"
         +"모바일로 다시 접속해주세요."));
         document.body.appendChild(aTag).style.margin = "100px";
     });
@@ -45,7 +54,7 @@ const sleep = msec => new Promise((resolve, reject) => {
 
 function rend(dir) {
     return new Promise(resolve => {
-        get(dir).then(res => {
+        get("../pages/" + dir).then(res => {
             screen.innerHTML = res;
             resolve(true);
         });
@@ -105,6 +114,10 @@ function result() {
     socket.emit("name", names[0]);
     if(names[1] !== null) {
         rend("fin.html").then(() => {
+            sounds[1].pause();
+            sounds[1].currentTime = 0;
+            sounds[0].currentTim = 0;
+            sounds[0].play();
             let score = 0;
             for(let i = 0; i < resultData.length; i++) {
                 if(resultData[i]) score++;
@@ -125,14 +138,39 @@ function capture() {
     });
 }
 
-rend("main.html");
+function goHome() {
+    swal({
+        title: "메인으로 돌아가실래요?",
+        text: "진행중인 게임이 있으면 종료됩니다!",
+        icon: "warning",
+        buttons: {
+            cancel: {
+                text: "취소",
+                value: false,
+                visible: true
+            },
+            confirm: {
+                text: "확인",
+                value: true,
+                visible: true
+            }
+        }
+    }).then(tmp => {
+        if(tmp) location.reload();
+    })
+}
+
+function start() {
+    rend("main.html").then(() => sounds[0].play());
+}
+
 
 const socket = io();
 
 socket.on("dscnct", () => {
     swal({
-        title: "상대와의 연결이 끊어졌습니다!",
-        text: "메인으로 돌아가서 다시 연결하세요.",
+        title: "상대와의 연결이 끊어졌습니다😫",
+        text: "메인으로 돌아가서 다시 연결해주세요.",
         icon: "error",
         button: "확인"
     }).then(() => location.reload());
@@ -155,6 +193,12 @@ socket.on("play", async data => {
         greenload.style.opacity = "1";
         greenload.style.animation = "loadbar 3s linear";
         await sleep(3000);
+    }
+    else {
+        sounds[0].pause();
+        sounds[0].currentTime = 0;
+        sounds[1].currentTime = 0;
+        sounds[1].play();
     }
     if(data.index === 'e') {
         resultData = data.result;
@@ -185,6 +229,10 @@ socket.on("name", data => {
     names[1] = data;
     if(names[0] !== null) {
         rend("fin.html").then(() => {
+            sounds[1].pause();
+            sounds[1].currentTime = 0;
+            sounds[0].currentTim = 0;
+            sounds[0].play();
             let score = 0;
             for(let i = 0; i < resultData.length; i++) {
                 if(resultData[i]) score++;
@@ -204,7 +252,7 @@ function host() {
 let code = null;
 socket.on("code", data => {
     code = data;
-    document.getElementById("code").value = "yeegu.me/" + code;
+    document.getElementById("code").value =  code;
 }); 
 
 socket.on("start", data => {
@@ -217,9 +265,9 @@ socket.on("start", data => {
 /*====join part from here====*/
 function join() {
     let cd = document.getElementById("code").value;
-    cd = cd.replace(/(?:https?:(?:\/\/)?)?(?:yeegu\.me\/)?([a-z0-9]{6})\/?/i, "$1");
+    //cd = cd.replace(/(?:https?:(?:\/\/)?)?(?:yeegu\.me\/)?([a-z0-9]{6})\/?/i, "$1");
     if(cd.length != 6) swal({
-        title: "잘못된 코드입니다!",
+        title: "잘못된 형식의 코드입니다😫",
         icon: "warning",
         button: "확인"
     });
@@ -234,7 +282,7 @@ socket.on("joinCheck", data => {
         socket.emit("ready", qindex);
     }
     else swal({
-        title: "존재하지 않는 코드입니다!",
+        title: "존재하지 않는 코드입니다😫",
         icon: "error",
         button: "확인"
     });
