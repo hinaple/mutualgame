@@ -11,6 +11,15 @@
         <script src="/socket.io/socket.io.js"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-164207028-1"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-164207028-1');
+        </script>
     </head>
     <body oncontextmenu='return false' ondragstart='return false' onselectstart='return false'>
         <div class="screen" id="screen" style="text-align: center;">
@@ -18,6 +27,11 @@
                 <button onclick="start()">게임 시작!</button>
             </div>
         </div>
+        <ins class="kakao_ad_area" style="position:fixed;bottom:0px;display:none;" 
+        data-ad-unit    = "DAN-qxibapxw9n3l" 
+        data-ad-width   = "320" 
+        data-ad-height  = "50"></ins> 
+        <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
     </body>
     <script src="app.js"></script>
 </html>
