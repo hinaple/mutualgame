@@ -3,4 +3,4 @@
 
 사용 핵심 기술: ```socket.io```, ```SPA```
 
-배포 완료 http://mutualga.me (SSL 인증서 투후 적용 예정)
+배포 완료 http://mutualga.me (SSL 인증서 추후 적용 예정)
