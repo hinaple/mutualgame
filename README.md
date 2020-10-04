@@ -1,5 +1,5 @@
 # mutualga.me
-온라인 실시간 이신전심(Nodejs)
+온라인 실시간 이심전심(Nodejs)
 
 사용 핵심 기술: ```socket.io```, ```SPA```
 ```
